@@ -18,11 +18,7 @@ node_modules
 *.sublime-workspace
 
 # IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode
 
 # misc
 /.sass-cache
@@ -40,3 +36,19 @@ Thumbs.db
 
 .nx/cache
 .nx/workspace-data
+
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache.env
+.env
+
+# TypeScript build info
+*.tsbuildinfo
+
+# GraphQL generated schema
+*.gql
