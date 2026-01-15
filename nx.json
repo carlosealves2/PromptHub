@@ -14,9 +14,7 @@
     {
       "plugin": "@nx/js/typescript",
       "options": {
-        "typecheck": {
-          "targetName": "typecheck"
-        },
+        "typecheck": { "targetName": "typecheck" },
         "build": {
           "targetName": "build",
           "configName": "tsconfig.lib.json",
@@ -41,11 +39,7 @@
     },
     {
       "plugin": "@nx/vitest",
-      "options": {
-        "testTargetName": "test",
-        "ciTargetName": "test-ci",
-        "testMode": "watch"
-      }
+      "options": { "testTargetName": "test", "ciTargetName": "test-ci", "testMode": "watch" }
     },
     {
       "plugin": "@nx/webpack/plugin",
@@ -68,9 +62,6 @@
       }
     }
   ],
-  "targetDefaults": {
-    "test": {
-      "dependsOn": ["^build"]
-    }
-  }
+  "targetDefaults": { "test": { "dependsOn": ["^build"] } },
+  "nxCloudId": "69683c62bddca565eb7a4472"
 }
