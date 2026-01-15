@@ -1,0 +1,84 @@
+name: CD Production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: ci
+    env:
+      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build all projects
+        run: npx nx run-many -t build --all
+
+  docker-push-prod:
+    name: Push Docker Images (Prod)
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version from package.json (API)
+        id: api_version
+        run: echo "version=$(node -p "require('./apps/api/package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Get version from package.json (Web)
+        id: web_version
+        run: echo "version=$(node -p "require('./apps/web/package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push API
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./apps/api/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/prompthub-api:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/prompthub-api:${{ steps.api_version.outputs.version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push Web
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./apps/web/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/prompthub-web:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/prompthub-web:${{ steps.web_version.outputs.version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
