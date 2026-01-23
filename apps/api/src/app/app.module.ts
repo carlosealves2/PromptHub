@@ -16,6 +16,7 @@ import { UsersModule } from '../users/users.module';
 import { RolesModule } from '../roles/roles.module';
 import { PermissionsModule } from '../permissions/permissions.module';
 import { GroupsModule } from '../groups/groups.module';
+import { PromptsModule } from '../prompts/prompts.module';
 
 // Guards for global authentication and authorization
 import { JwtAuthGuard, RolesGuard, PermissionsGuard } from '../auth/guards';
@@ -35,6 +36,7 @@ import { databaseConfig } from '../config/database.config';
  * - RolesModule: Role management endpoints
  * - PermissionsModule: Permission management endpoints
  * - GroupsModule: Group management endpoints
+ * - PromptsModule: Prompt management with versioning
  *
  * Global Guards (applied to all routes):
  * - JwtAuthGuard: Validates JWT tokens (use @Public() to bypass)
@@ -70,6 +72,7 @@ import { databaseConfig } from '../config/database.config';
     RolesModule,
     PermissionsModule,
     GroupsModule,
+    PromptsModule,
   ],
   controllers: [AppController],
   providers: [
