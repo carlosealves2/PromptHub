@@ -9,9 +9,8 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { PromptVersion } from './prompt-version.entity';
 
-// Forward reference - PromptVersion will be created in subtask-1-2
-// Using string literal for circular dependency resolution
 @Entity('prompts')
 export class Prompt {
   @PrimaryGeneratedColumn('uuid')
@@ -30,8 +29,8 @@ export class Prompt {
   @Column({ name: 'created_by' })
   createdById: string;
 
-  @OneToMany('PromptVersion', 'prompt', { cascade: true })
-  versions: any[]; // Will be typed as PromptVersion[] once the entity is created
+  @OneToMany(() => PromptVersion, (version) => version.prompt, { cascade: true })
+  versions: PromptVersion[];
 
   @CreateDateColumn()
   createdAt: Date;
