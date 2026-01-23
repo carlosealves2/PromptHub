@@ -1,4 +1,22 @@
 services:
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=${DATABASE_USER:-prompthub}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD:-prompthub}
+      - POSTGRES_DB=${DATABASE_NAME:-prompthub}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - prompthub
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER:-prompthub} -d ${DATABASE_NAME:-prompthub}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   api:
     build:
       context: .
@@ -9,6 +27,14 @@ services:
       - NODE_ENV=${NODE_ENV:-production}
       - GRAPHQL_INTROSPECTION=${GRAPHQL_INTROSPECTION:-false}
       - GRAPHQL_CSRF_PREVENTION=${GRAPHQL_CSRF_PREVENTION:-true}
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USER=${DATABASE_USER:-prompthub}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD:-prompthub}
+      - DATABASE_NAME=${DATABASE_NAME:-prompthub}
+    depends_on:
+      postgres:
+        condition: service_healthy
     networks:
       - prompthub
 
@@ -28,3 +54,6 @@ services:
 networks:
   prompthub:
     driver: bridge
+
+volumes:
+  postgres_data:

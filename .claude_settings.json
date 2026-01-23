@@ -1,0 +1,39 @@
+{
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  },
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Read(./**)",
+      "Write(./**)",
+      "Edit(./**)",
+      "Glob(./**)",
+      "Grep(./**)",
+      "Read(/Users/carlos/Desenvolvimento/projetos/pessoais/PromptHub/.auto-claude/worktrees/tasks/001-auth-system/**)",
+      "Write(/Users/carlos/Desenvolvimento/projetos/pessoais/PromptHub/.auto-claude/worktrees/tasks/001-auth-system/**)",
+      "Edit(/Users/carlos/Desenvolvimento/projetos/pessoais/PromptHub/.auto-claude/worktrees/tasks/001-auth-system/**)",
+      "Glob(/Users/carlos/Desenvolvimento/projetos/pessoais/PromptHub/.auto-claude/worktrees/tasks/001-auth-system/**)",
+      "Grep(/Users/carlos/Desenvolvimento/projetos/pessoais/PromptHub/.auto-claude/worktrees/tasks/001-auth-system/**)",
+      "Read(/Users/carlos/Desenvolvimento/projetos/pessoais/PromptHub/.auto-claude/worktrees/tasks/001-auth-system/.auto-claude/specs/001-auth-system/**)",
+      "Write(/Users/carlos/Desenvolvimento/projetos/pessoais/PromptHub/.auto-claude/worktrees/tasks/001-auth-system/.auto-claude/specs/001-auth-system/**)",
+      "Edit(/Users/carlos/Desenvolvimento/projetos/pessoais/PromptHub/.auto-claude/worktrees/tasks/001-auth-system/.auto-claude/specs/001-auth-system/**)",
+      "Read(/Users/carlos/Desenvolvimento/projetos/pessoais/PromptHub/.auto-claude/**)",
+      "Write(/Users/carlos/Desenvolvimento/projetos/pessoais/PromptHub/.auto-claude/**)",
+      "Edit(/Users/carlos/Desenvolvimento/projetos/pessoais/PromptHub/.auto-claude/**)",
+      "Glob(/Users/carlos/Desenvolvimento/projetos/pessoais/PromptHub/.auto-claude/**)",
+      "Grep(/Users/carlos/Desenvolvimento/projetos/pessoais/PromptHub/.auto-claude/**)",
+      "Bash(*)",
+      "WebFetch(*)",
+      "WebSearch(*)",
+      "mcp__context7__resolve-library-id(*)",
+      "mcp__context7__get-library-docs(*)",
+      "mcp__graphiti-memory__search_nodes(*)",
+      "mcp__graphiti-memory__search_facts(*)",
+      "mcp__graphiti-memory__add_episode(*)",
+      "mcp__graphiti-memory__get_episodes(*)",
+      "mcp__graphiti-memory__get_entity_edge(*)"
+    ]
+  }
+}
